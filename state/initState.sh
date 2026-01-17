@@ -7,7 +7,7 @@ function initState {
 
   IFS=":"
 
-  local options_list="Exit:adb pair & connect:Create Android Template:Next"
+  local options_list="Exit:adb pair & connect:Go to all apk instalable:Go to :Create Android Template:Next"
   select option in $options_list; do
     echo "selected: $option"
 

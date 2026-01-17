@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. state/inApkInstallableState.sh
+
 function inDeviceState {
 
   echo
@@ -36,7 +38,8 @@ function inDeviceState {
 
     elif [[ "$(echo "$options_list" | cut -d: -f3)" == "$selected_option_indevice" ]]; then
       echo TODD
-      #      apkFolder=$(gum choose $(ls -d *apk/))
+      apkFolder=$(gum choose $(ls -d *apk/))
+      inApkInstallableState
       #      adb install-multiple $apkFolder*.apk
     else
       echo "Sorry, wrong selection"

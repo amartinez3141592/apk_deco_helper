@@ -1,8 +1,9 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
+cd usr/lib/AndroidDecompiler
 . state/initState.sh
-
 cat banner.txt
+cd ../../..
 
 function main {
   initState

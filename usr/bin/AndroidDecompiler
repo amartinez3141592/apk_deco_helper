@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+set -e
+APP_DIR="/usr/local/lib/AndroidDecompiler"
+export APP_DIR 
+
+source "$APP_DIR/main.sh"

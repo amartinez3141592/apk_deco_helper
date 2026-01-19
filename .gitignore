@@ -1,2 +1,5 @@
-apk/
-*apk/
+errors_solve.sh
+c_port.txt
+host.default
+*.jks
+keyStore.jks

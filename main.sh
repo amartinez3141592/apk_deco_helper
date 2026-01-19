@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/zsh
+
 . state/initState.sh
 
 cat banner.txt
@@ -6,7 +7,7 @@ cat banner.txt
 function main {
   initState
 }
-
 main
 
-unset IFS
+# shellcheck  -e SC1091 main.sh
+# zsh

@@ -1,49 +1,80 @@
-#!/bin/bash
+#!/bin/zsh
 
 . state/inApkInstallableState.sh
 
 function inDeviceState {
 
-  echo
+
+  echo 
   echo "STATE: inDevice"
-  echo
+  echo 
+    
 
-  IFS=":"
 
-  local options_list="go back:search apk file by packageName:next"
+  local options_list=("go back" "search apk file by packageName" "install apk/" "uninstall apk" "disconect" )
 
-  select selected_option_indevice in $options_list; do
-    echo "selected: $selected_option_indevice"
+  local option=""
+  local packageName=""
+  local path_list=()
+  local apkFolder
 
-    if [[ "$(echo "$options_list" | cut -d: -f1)" == "$selected_option_indevice" ]]; then
-      adb disconnect
-      break
-    elif [[ "$(echo "$options_list" | cut -d: -f2)" == "$selected_option_indevice" ]]; then
+  while [[ "$option" != "go back" ]]; do
+  
+    option=$(gum choose $options_list )
 
-      unset IFS
-      packageName=$(gum choose --height 10 $(adb shell pm list package | cut -d: -f2))
+    gum format -- "selected: $option"
 
-      echo "You choose $packageName"
+    if [[ "$options_list[2]" == "$option" ]]; then
+      packageName=$(gum choose $(adb shell pm list package | cut -d: -f2))
+
+      # TODO : Remove that command, in initState there is a similar condition to
+      # avoid adb connection fails
+      [ "$packageName" = "" ] && {
+        gum format -- "emulator error" ;
+        adb disconnect ;
+        break ;
+      }
+
+
+      gum format -- "You choose $packageName"
+
       path_list=$(gum choose --header="Select all apk to get:" --no-limit $(adb shell pm path $packageName | cut -d: -f2))
 
-      echo "Pull directory: apk/"
+      gum format -- "Pull directory: apk\/"
+      
       mkdir apk
-
-      for path in $path_list; do
-        adb pull $path apk/
-        echo "Pull $path"
+      
+      [ $? -eq 0 ] || {
+        gum format -- "ERROR: Change your actual working directory or delete actual working dir: rm -rf *apk/" ;
+        exit ;
+      }
+      
+      for path_apk in "${path_list[@]}" ; do
+        adb pull "$path_apk" "apk/"
+        gum format -- "Pull $path_apk"
       done
+ 
 
-      IFS=":"
+    elif [[ "$options_list[3]" == "$option" ]]; then
 
-    elif [[ "$(echo "$options_list" | cut -d: -f3)" == "$selected_option_indevice" ]]; then
-      echo TODD
-      apkFolder=$(gum choose $(ls -d *apk/))
-      inApkInstallableState
-      #      adb install-multiple $apkFolder*.apk
-    else
-      echo "Sorry, wrong selection"
+      apkFolder=$(gum choose --header="Select apk to install" $(ls -d *apk/))
+      adb install-multiple $apkFolder*.apk
 
+    elif [[ "$options_list[4]" == "$option" ]]; then
+
+      packageName=$(gum choose $(adb shell pm list package | cut -d: -f2))
+      [ "$packageName" = "" ] && { echo "emulator error" ; adb disconnect ; break }
+      
+      gum format -- "You choose $packageName"
+      adb uninstall "$packageName"
+    elif [[ "$options_list[5]" == "$option" ]]; then
+    
+      adb disconnect
+    
+    elif [[ "$options_list[1]" != "$option" ]]; then
+     gum format -- "Sorry, wrong selection"
     fi
   done
+
+
 }

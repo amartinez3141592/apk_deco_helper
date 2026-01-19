@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 function inApkInstallableState {
 
@@ -6,27 +6,54 @@ function inApkInstallableState {
   echo "STATE:  inApkInstalableState"
   echo
 
-  IFS=":"
+  local path="$1"
+  local options_list=("go back" "Decompile using apktool" "Decompile using jadx")
 
-  local options_list="go back:Decompile using apktool:Decompile using jadx"
+  local option=""
+  local choosedApk=""
 
-  select selected_option_indevice in $options_list; do
+  while [[ "$option" != "Exit" ]]; do
+  
 
-    echo "selected: $selected_option_indevice"
+    option=$(gum choose $options_list)
+  
+    echo "selected: $option"
 
-    if [[ "$(echo "$options_list" | cut -d: -f1)" == "$selected_option_indevice" ]]; then
+
+    if [[ "$options_list[1]" == "$option" ]]; then
       break
 
-    elif [[ "$(echo "$options_list" | cut -d: -f2)" == "$selected_option_indevice" ]]; then
 
-    elif [[ "$(echo "$options_list" | cut -d: -f3)" == "$selected_option_indevice" ]]; then
+    elif [[ "$options_list[2]" == "$option" ]]; then
 
-      echo "selected: $selected_option_indevice"
+      #TODO: verify
+      choosedApk=$(gum choose --header="Select apk to decompile" $(ls "$path"/*.apk))
 
-    else
 
+      gum format -- "apk: $choosedApk"
+      gum confirm -- "This operation may delete files inside $path-smali/, are you sure? > " && {
+        rm -rf "$path-smali/"
+        mkdir "$path-smali/"
+        gum confirm -- "Decompile resources (is not recommended for splits) > " && 
+          apktool d "$choosedApk" -o "$path-smali/" -advance || \
+          apktool d "$choosedApk" -o "$path-smali/" -advance --no-res ;
+        gum confirm -- "Do you want to use git in this decompilation? (recommended)" && {
+          cd "$path-smali"
+          git init
+          git add *
+          git commit -m "init"
+          cd ..
+
+        }
+      }
+
+    elif [[ "$options_list[3]" == "$option" ]]; then
+      #TODO: verify
+      choosedApk=$(gum choose --header="Select apk to decompile" $(ls $path/*.apk))
+      jadx -e -d "$path-jadx" "$choosedApk" --show-bad-code --log-level ERROR --threads-count 1
+
+    elif [[ "$options_list[1]" != "$option" ]]; then
       echo "Sorry, wrong selection"
-
     fi
   done
 }

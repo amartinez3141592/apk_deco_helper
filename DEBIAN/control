@@ -3,7 +3,7 @@ Version: 1.0.0
 Section: utils
 Priority: optional
 Architecture: all
-Depends: apktool, jadx, apksigner, zipalign, zsh, gum, adb, apktool
+Depends: apktool, apksigner, zipalign, zsh, gum, adb, apktool
 Maintainer: Alexis Martinez <alexis.martinez.trabajo@gmail.com>
 Description: Interactive reverse engenieering CLI gum tool.
  Gives a specific structure folder to make it easy.

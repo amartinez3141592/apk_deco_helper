@@ -16,7 +16,7 @@ function inSmaliState {
 
   while [[ "$option" != "go back" ]]; do
 
-    option=$(gum choose --header="Available smali operations > "  $options_list)
+    option=$(gum choose --header="Available smali operations to $smali_dir > "  $options_list)
   
     gum format -- "selected: $option"
 
@@ -24,10 +24,10 @@ function inSmaliState {
     if [[ "$options_list[2]" == "$option" ]]; then
 
       mkdir "$smali_dir-apkzs"
-      apktool b "$smali_dir" -r # -r
+      apktool b "$smali_dir" -r
       rm "$smali_dir-apkzs"/base.apk
       cp "$smali_dir"/dist/base.apk "$smali_dir-apkzs"
- 
+      echo "Apk is on $smali_dir-apkzs/" 
 
     elif [[ "$options_list[3]" == "$option" ]]; then
 

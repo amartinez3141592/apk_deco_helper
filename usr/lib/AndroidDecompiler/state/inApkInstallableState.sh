@@ -16,7 +16,7 @@ function inApkInstallableState {
 
   while [[ "$option" != "go back" ]]; do
 
-    option=$(gum choose --header="Available APK operations" $options_list)
+    option=$(gum choose --header="Available APK operations to $apk_dir > " $options_list)
   
     gum format -- "selected: $option"
 
@@ -62,11 +62,12 @@ function inApkInstallableState {
 
 
     elif [[ "$options_list[4]" == "$option" ]]; then
-      
-      if [ $(echo "$apk_dir" | grep -c apks$) -eq 1 ]; then 
+
+      ([ $(echo "$apk_dir" | grep -c apks$) -eq 1 ] || \
+        [ $(echo "$apk_dir" | grep -c apk$) -eq 1 ] ) && {
         gum format -- "Unable to zipalign: $apk_dir already zipaligned" 
         continue 
-      fi
+      }
 
       if [ $(echo "$apk_dir" | grep -c apkz$) -eq 1 ]; then
         apk_dir_out="${apk_dir:0:-1}"
@@ -93,11 +94,12 @@ function inApkInstallableState {
         apk_dir_out="${apk_dir:0:-1}"
       fi 
 
-      if [ $(echo "$apk_dir" | grep -c apkz$) -eq 1 ]; then
+      ([ $(echo "$apk_dir" | grep -c apkz$) -eq 1 ] || \
+        [ $(echo "$apk_dir" | grep -c apk$) -eq 1 ] ) && {
         gum format -- "Unable to sign: $apk_dir already signed"
         continue
-      fi
-      
+      }
+
       if [ $(echo "$apk_dir" | grep -c apkzs$) -eq 1 ]; then
         apk_dir_out="${apk_dir:0:-2}z"
       fi

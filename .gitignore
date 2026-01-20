@@ -3,3 +3,5 @@ c_port.txt
 host.default
 *.jks
 keyStore.jks
+
+apk*/

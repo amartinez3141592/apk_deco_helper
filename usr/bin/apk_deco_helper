@@ -6,7 +6,7 @@ SCRIPT=$(realpath "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
 
-APP_DIR="$SCRIPTPATH/../lib/AndroidDecompiler"
+APP_DIR="$SCRIPTPATH/../lib/ApkDecoHelper"
 export APP_DIR 
 
 source "$APP_DIR/main.sh"

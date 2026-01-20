@@ -1,4 +1,9 @@
+#apk_deco_helper
+
+Reverse engineering apk decompiler CLI helper
+
 To use this terminal tool, you need to install:
+
 * apktool
 * jadx
 * apksigner
@@ -7,12 +12,21 @@ To use this terminal tool, you need to install:
 * gum
 * adb
 
-To run this command run:
 
-zsh usr/bin/AndroidDecompiler.sh
+To install from source >
 
 
-dpkg-deb --build myapp-deb
-sudo dpkg -i myapp-deb.deb
+dpkg-deb --build ApkDecoHelper
+
+sudo dpkg -i ApkDecoHelper.deb
+
 sudo apt --fix-broken install
-sudo apt remove myapp
+
+To use it >
+
+apk_deco_helper
+
+
+To remove it >
+
+sudo apt remove ApkDecoHelper

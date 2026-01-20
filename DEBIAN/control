@@ -1,4 +1,4 @@
-Package: AndroidDecoHelper
+Package: ApkDecoHelper
 Version: 1.0.0
 Section: utils
 Priority: optional
@@ -12,6 +12,6 @@ Description: Interactive reverse engenieering CLI gum tool.
  Recompile the apk using apktool.
  Zipalign and sign the apk to installation.
  How to use it:
-	> android_doco_helper
+	> apk_deco_helper
 
 

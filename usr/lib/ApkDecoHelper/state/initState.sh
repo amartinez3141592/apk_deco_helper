@@ -12,7 +12,7 @@ function initState {
   echo "STATE: Disconnected"
   echo
 
-  local options_list=("Exit" "adb pair & connect" "Go to all apk instalable" "Go to smali" "Generate keyStore.jks" "Create Android Template")
+  local options_list=("Exit" "adb pair & connect" "Go to all apk instalable" "Go to smali" "Generate keyStore.jks" "Create Android Template" "See graph state")
 
   local option=""
 
@@ -107,6 +107,8 @@ function initState {
       gum confirm -- "This operation may download, are you sure you want to continue? > " && \
         git clone https://github.com/android/architecture-templates.git --branch base androidTemplate
 
+    elif [[ "$options_list[7]" == "$option" ]]; then
+      cat $state_dir/graphState.txt
     elif [[ "$options_list[1]" != "$option" ]]; then
       gum format --  "Sorry, wrong selection"
       

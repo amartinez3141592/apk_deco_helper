@@ -1,4 +1,4 @@
-Package: AndroidDecompiler
+Package: AndroidDecoHelper
 Version: 1.0.0
 Section: utils
 Priority: optional
@@ -6,10 +6,12 @@ Architecture: all
 Depends: apktool, jadx, apksigner, zipalign, zsh, gum, adb, apktool
 Maintainer: Alexis Martinez <alexis.martinez.trabajo@gmail.com>
 Description: Interactive reverse engenieering CLI gum tool.
-Gives a specific structure folder to make it easy.
-Allow you to get apk from devices or emulators with adb.
-Decompile the apk using apktool or jadx.
-Recompile the apk using apktool.
-Zipalign and sign the apk to installation.
+ Gives a specific structure folder to make it easy.
+ Allow you to get apk from devices or emulators with adb.
+ Decompile the apk using apktool or jadx.
+ Recompile the apk using apktool.
+ Zipalign and sign the apk to installation.
+ How to use it:
+	> android_doco_helper
 
 

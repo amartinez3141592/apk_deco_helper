@@ -1,8 +1,11 @@
 #!/usr/bin/env zsh
 
-. state/inDeviceState.sh
-. state/inApkInstallableState.sh
-. state/inSmaliState.sh
+script_dir=$(realpath "$0")
+state_dir=$(dirname "$script_dir")
+
+. $state_dir/inDeviceState.sh
+. $state_dir/inApkInstallableState.sh
+. $state_dir/inSmaliState.sh
 
 function initState {
   echo

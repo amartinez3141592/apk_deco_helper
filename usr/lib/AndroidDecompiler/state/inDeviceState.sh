@@ -1,7 +1,10 @@
 #!/usr/bin/env zsh
 
 
-. state/inApkInstallableState.sh
+script_dir=$(realpath "$0")
+state_dir=$(dirname "$script_dir")
+
+. $state_dir/inApkInstallableState.sh
 
 function inDeviceState {
 

@@ -1,8 +1,12 @@
 #!/usr/bin/env zsh
 
-. state/initState.sh
+SCRIPT=$(realpath "$0")
+app_dir=$(dirname "$SCRIPT")
 
-cat banner.txt
+. $app_dir/state/initState.sh
+cat $app_dir/banner.txt
+
+
 
 function main {
   initState
